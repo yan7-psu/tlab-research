@@ -45,10 +45,10 @@ def get_command(spikes):
     if (torch.equal(spikes, torch.tensor([[[[1.,0.,0.]]]]))):
         print("FORWARD")
         return command[0]
-    elif(torch.equal(spikes,torch.tensor([[[[0.,1.,0.]]]]))):
+    elif(torch.equal(spikes,torch.tensor([[[[0.,0.,1.]]]]))):
         print("R")
         return command[1]
-    elif(torch.equal(spikes,torch.tensor([[[[0.,0.,1.]]]]))):
+    elif(torch.equal(spikes,torch.tensor([[[[0.,1.,0.]]]]))):
         print("L")
         return command[2] 
     else:
@@ -61,7 +61,7 @@ num_hidden = 300
 num_outputs = 3
 
 # Temporal Dynamics
-beta = 0.95
+beta = 0.77
 threshold = 0.2
 
 num_steps = 1
@@ -99,7 +99,7 @@ def main():
 
     if PLOT_ON:
         plt.ion()
-        fig1 = plt.figure(m)
+        
 
     for epoch in range(num_epochs):
 
@@ -175,8 +175,8 @@ def main():
             optimizer.step()
 
             if PLOT_ON:
-                fig1.remove()   
-                fig1.imshow(m)
+                fig1   
+                
                 plt.show()
 
             

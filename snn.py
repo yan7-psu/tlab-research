@@ -14,7 +14,7 @@ import itertools
 
 from IPython.display import HTML
 
-num_steps = 1
+num_steps = 6
 
 # Define Network
 class Net(nn.Module):
@@ -39,6 +39,7 @@ class Net(nn.Module):
         for step in range(num_steps):
             cur1 = self.fc1(x)
             spk1, mem1 = self.lif1(cur1, mem1)
+            print("mem1: ",mem1)
             cur2 = self.fc2(spk1)
             spk2, mem2 = self.lif2(cur2, mem2)
             spk2_rec.append(spk2)
@@ -46,19 +47,13 @@ class Net(nn.Module):
 
         return torch.stack(spk2_rec,dim=0), torch.stack(mem2_rec,dim=0) # time-steps x batch x num_out
     
-    #def accuracy():
 
     
-    # def move_loss(self,input,food):
-    #     #loss = nn.MSELoss()
 
-    #     if (food == True):
-    #         output = loss(input, torch.tensor([[1,0,0]]))
-    #         target = torch.tensor([[1,0,0]])
-    #     else:
-    #         output = loss(input, torch.tensor([[0,1,0]]))
-    #         target = torch.tensor([[0,1,0]])
+ffssn = Net(2,4,3,.95,0.4)
 
-    #     return output,target
-    
+input = torch.tensor([[1.,1.]])
 
+
+#we see that membrane potential rises and resets when num_steps is longer than 1
+output, mem2 = ffssn(input)
